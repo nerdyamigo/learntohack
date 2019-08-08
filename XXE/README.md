@@ -132,6 +132,11 @@ And here is what that `payload.dtd` contains
 - The code within payload.dtd is parsed by the XML parser, which reads the contents of win.ini and sends it as a parameter in an HTTP GET request back to `https://evil-webserver.com`
 
 The extracted data can be viewed by the attacker in their web server logs.
-
+## Learn more 
 [XXE Payloads](https://gist.github.com/staaldraad/01415b990939494879b4)
+
 [Synack](https://www.synack.com/blog/a-deep-dive-into-xxe-injection/)
+
+[OWASP](https://www.owasp.org/index.php/XML_External_Entity_(XXE)_Processing)
+
+
