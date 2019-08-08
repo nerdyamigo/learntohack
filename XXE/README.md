@@ -1,3 +1,6 @@
+# What is XXE?
+XXE = XML External Entity
+
 # XML and its ENTITYs
 ### What is a DTD
 A DTD is a Document Type Definition.
