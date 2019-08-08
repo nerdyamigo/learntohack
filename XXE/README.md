@@ -1,7 +1,7 @@
 # What is XXE?
 XXE = XML External Entity
 
-This is a type of attack that targets `XML` parsers. The attack works by loading an `External Entity` into valid `XML`. This attack can lead to `data disclosure`, `dos`,`srf` and even port scanning of local resources.
+This is a type of attack that targets `XML` parsers. The attack works by loading an `External Entity` into valid `XML`. This attack can lead to `data disclosure`, `dos`,`srf` and even `port scanning` of local resources.
 
 # XML and its ENTITYs
 ### What is a DTD
