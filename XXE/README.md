@@ -139,4 +139,4 @@ The extracted data can be viewed by the attacker in their web server logs.
 
 [OWASP](https://www.owasp.org/index.php/XML_External_Entity_(XXE)_Processing)
 
-
+[H1 Report](https://hackerone.com/reports/312543)
