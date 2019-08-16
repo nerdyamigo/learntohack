@@ -1,9 +1,13 @@
 # What is XXE?
 XXE = XML External Entity
 
-This is a type of attack that targets `XML` parsers. The attack works by loading an `External Entity` into valid `XML`. This attack can lead to `data disclosure`, `dos`,`srf` and even `port scanning` of local resources.
+This is a type of attack that targets `XML`[extensible markup language] parsers. The attack works by loading an `External Entity` into valid `XML`. This attack can lead to `data disclosure`, `dos`,`ssrf` and even `port scanning` of local resources.
 
 # XML and its ENTITYs
+
+### XML Entities
+A way of representing an item of data within an `XML` doc. Certain entities are built in to the spec i.e `&lt;` and `&gt;` represent the chars `< >`, these are metachars use to denote `XML` tags and must be represented using their entities when they appear in data.
+
 ### What is a DTD
 A DTD is a Document Type Definition.
 A DTD defines the structure anf the legal elements and attributes of an XML document. 
@@ -132,11 +136,17 @@ And here is what that `payload.dtd` contains
 - The code within payload.dtd is parsed by the XML parser, which reads the contents of win.ini and sends it as a parameter in an HTTP GET request back to `https://evil-webserver.com`
 
 The extracted data can be viewed by the attacker in their web server logs.
+
 ## Learn more 
+
 [XXE Payloads](https://gist.github.com/staaldraad/01415b990939494879b4)
 
 [Synack](https://www.synack.com/blog/a-deep-dive-into-xxe-injection/)
 
-[OWASP](https://www.owasp.org/index.php/XML_External_Entity_(XXE)_Processing)
+[PortSwigger Academy](https://portswigger.net/web-security/xxe)
 
 [H1 Report](https://hackerone.com/reports/312543)
+
+[PortSwigger](https://portswigger.net/web-security/xxe)
+
+[Cracking the lens: targeting HTTP's hidden attack-surface](https://portswigger.net/blog/cracking-the-lens-targeting-https-hidden-attack-surface)
