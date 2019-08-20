@@ -8,13 +8,24 @@ This is a type of attack that targets `XML`[extensible markup language] parsers.
 ### XML Entities
 A way of representing an item of data within an `XML` doc. Certain entities are built in to the spec i.e `&lt;` and `&gt;` represent the chars `< >`, these are metachars use to denote `XML` tags and must be represented using their entities when they appear in data.
 
+```xml
+<!DOCTYPE foo [ <!ENTITY myentity "my entity val" > ]>
+```
+
+Now we could use `&myentity;` and it would be replaced with `"my entity value"`.
+
 ### What is a DTD
+
 A DTD is a Document Type Definition.
-A DTD defines the structure anf the legal elements and attributes of an XML document. 
+A DTD defines the structure anf the legal elements and attributes of an XML document. A DTD can be `Internal` or `External`, or a hybrid of the two.
+
 ### Why use a DTD
+
 With a DTD, independent groups of peopl can agree on a standard DTD for interchanging data.
 An application can use a DTD to verify that XML data is valid. 
+
 ### Internal DTD Declaration
+
 If the DTD is declared inside the XML file, it must be wrapped inside the `<!DOCTYPE>` definition:
 ```xml
 <?xml version="1.0"?>
@@ -33,11 +44,17 @@ If the DTD is declared inside the XML file, it must be wrapped inside the `<!DOC
 </note>
 ```
 ### An External DTD Declaration
-If the DTD is declared in an external file, the `<!DOCTYPE>`definition must contain a reference to the DTD file:
+If the DTD is declared in an external file, the `<!DOCTYPE>`definition must contain a reference to the DTD file.
+
+#### What are `XML external entities`?
+
+A custon entity whose definition is located outside of the `DTD` where they are declared.
+
+The declaration of an external entity uses the `SYSTEM` keyword and must specify a `URL` from which the value of the entity should be loaded.
 ```xml
 <?xml version="1.0"?>
-<!DOCTYPE note SYSTEM "note.dtd">
-<note>
+<!DOCTYPE note SYSTEM "note.dtd"> // the external dtd is being declared here with the SYSEM keyword
+<note> // the dtd being being used -> not malicious YET
 	<to>Tove</to>
 	<from>Jani</from>
 	<heading>Reminder</heading>
@@ -84,18 +101,20 @@ The above `.dtd` file might be used as follows
 - ENTITYs can call local system files
 
 # Injection
+
 When data is passed in a `HTTP` request it opens the possibility of abuse from the user. In the case of a form wrappen in XML being sent to the server to be processed:
 - Intercept vulnerable request with a web proxy
 - Add injected ENTITY tag and `&xxe;` variable reference
 	- ensure the `&xxe;` reference is with data that will be returned and displayed
 - Release the intercept POST request
+
 # Out of band
+
 While some attacks might be as easy as that there are times where it is not as easy and here we turn to those external .dtd files mentioned. DOCTYPES references to external .dtd files allow us to conduct this attack entirely `out-of-band`
 
 The following request contains a .dtd from a server the attacker controls - here is the request:
-```
 
-
+```bash
 POST /notes/savenote HTTP/1.1
 User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.13; rv:65.0) Gecko/20100101 Firefox/65.0
 Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8
