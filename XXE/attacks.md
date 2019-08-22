@@ -1,6 +1,6 @@
 # Attacks
 
-### Using XXE to exfiltrate secret key from C2 instance: Chained XXE + SSRF
+### Using XXE to exfiltrate secret key from EC2 instance: Chained XXE + SSRF
 
 `Malicious POST request`
 
